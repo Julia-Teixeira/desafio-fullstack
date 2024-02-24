@@ -1,6 +1,5 @@
 import { AppError } from "../errors/app.error.js";
-import User from "../models/rest/user.model.js";
-import Product from "../models/rest/product.model.js";
+import Product from "../models/product.model.js";
 import ProductInfo from "../models/rest/productInfo.model.js";
 
 class ProductService {
