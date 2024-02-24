@@ -78,7 +78,7 @@ class ProductService {
 
     const product = newProduct.map((product, index) => ({
       ...product.dataValues,
-      details: newProductInfo[index].map((item) => {
+      productInfos: newProductInfo[index].map((item) => {
         return {
           id: item.dataValues.id,
           price: item.dataValues.price,
