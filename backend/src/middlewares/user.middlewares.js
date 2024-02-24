@@ -1,0 +1,40 @@
+import User from "../models/user.model.js";
+import { AppError } from "../errors/app.error.js";
+import jsonwebtoken from "jsonwebtoken";
+
+class UserMiddlewares{
+    userIdParams = async (req, res, next) => {
+        const { id } = req.params;
+        const user = await User.findByPk(id);
+        if(!user) {
+            throw new AppError("User not found.", 404 );
+        }
+        const {password, ...withoutPassword} = user.dataValues
+        res.locals.userParams = withoutPassword
+        next();
+    }
+
+    isTokenValid = async (req, res, next) => {
+        const { authorization } = req.headers;
+        const token = authorization.split(" ")[1];
+        if(!token) {
+            throw new AppError("Token not found.", 401);
+        }
+
+        const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+        res.locals.userTokenId = decoded.id
+        
+        next();
+    }
+
+    isUserOwner = async (req, res, next) => {
+        const { id } = req.params;
+        const { userTokenId } = res.locals
+        if(Number(id) !== userTokenId) {
+            throw new AppError("User without permission to access this route", 401);
+        }
+        next();
+    }
+}
+
+export default UserMiddlewares;
