@@ -29,7 +29,11 @@ const Product = database.define("products", {
   }
 });
 
-Product.User = Product.belongsTo(User);
-Product.ProductInfos = Product.hasMany(ProductInfo);
+Product.User = Product.belongsTo(User, {
+  onDelete: "cascade",
+});
+Product.ProductInfos = Product.hasMany(ProductInfo,{
+  onDelete: "cascade",
+});
 
 export default Product;

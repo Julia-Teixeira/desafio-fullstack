@@ -16,11 +16,11 @@ class UserMiddlewares{
 
     isTokenValid = async (req, res, next) => {
         const { authorization } = req.headers;
-        const token = authorization.split(" ")[1];
-        if(!token) {
+        if(!authorization) {
             throw new AppError("Token not found.", 401);
         }
-
+        
+        const token = authorization.split(" ")[1];
         const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
         res.locals.userTokenId = decoded.id
         

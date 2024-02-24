@@ -1,19 +1,23 @@
 import express from "express";
 import ProductController from "../controllers/product.controller.js";
 import UserMiddlewares from "../middlewares/user.middlewares.js";
+import ProductMiddlewares from "../middlewares/product.middlewares.js";
 
 const productRoutes = express.Router();
 const productController = new ProductController();
+const productMiddlewares = new ProductMiddlewares();
 const userMiddlewares = new UserMiddlewares();
 
 productRoutes.post("", userMiddlewares.isTokenValid, productController.create);
-productRoutes.get("", productController.getAll);
+productRoutes.get("", userMiddlewares.isTokenValid, productController.getAll);
 
-
-// userRoutes.use("/:id", userMiddlewares.isTokenValid,userMiddlewares.userIdParams, userMiddlewares.isUserOwner)
-// userRoutes.get("/:id", userController.getById)
-// userRoutes.patch("/:id", userController.update);
-// userRoutes.delete("/:id", userController.delete);
-
+productRoutes.use(
+  "/:id",
+  userMiddlewares.isTokenValid,
+  productMiddlewares.ensureIdIsValid
+);
+productRoutes.get("/:id", productController.getById);
+productRoutes.patch("/:id", productMiddlewares.isProductOwner, productController.update);
+productRoutes.delete("/:id", productMiddlewares.isProductOwner,productController.delete);
 
 export default productRoutes;

@@ -94,13 +94,51 @@ class ProductService {
   retrieveAll = async () => {
     const produtos = await Product.findAll({
       include: [{ model: ProductInfo, attributes: ["price", "color"] }],
-    })
+    });
 
-    if(produtos.length === 0) {
-      throw new AppError("No registered products", 404)
+    if (produtos.length === 0) {
+      throw new AppError("No registered products", 404);
     }
     return produtos;
   };
+
+  read = async (id) => {
+    const product = await Product.findByPk(id, {
+      include: [{ model: ProductInfo, attributes: ["price", "color"] }],
+    });
+    return product;
+  };
+
+  delete = async (id) => {
+    await Product.destroy({
+      where: { id },
+    })
+  }
+
+  update = async (id, payload) => {
+    const {productInfos, ...product} = payload
+
+    await Product.update(product,{where: {id}})
+    
+
+    if(productInfos){
+      await Promise.all(productInfos.map(async (productInfo) => {
+        const findInfo = await ProductInfo.findOne({where: {productId: id, color: productInfo.color}})
+  
+        if(findInfo){
+          await ProductInfo.update(productInfo, {where: {id: findInfo.id}})
+        } else {
+          await ProductInfo.create({...productInfo, productId: id})
+        }
+      }))
+    }
+
+    const updatedProduct = await Product.findByPk(id, {
+      include: [{ model: ProductInfo, attributes: ["price", "color"] }],
+    });
+
+    return(updatedProduct)
+  }
 }
 
 export default ProductService;
