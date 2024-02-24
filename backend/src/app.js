@@ -12,7 +12,7 @@ app.use(helmet())
 app.use(express.json());
 app.use(cors());
 
-app.use("/", (req, res) => {
+app.use("/doc", (req, res) => {
     res.send("Documentação da API Lexart Labs.");
 })
 app.use("/users", userRoutes);
