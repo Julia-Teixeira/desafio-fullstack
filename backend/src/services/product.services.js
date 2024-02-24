@@ -1,6 +1,6 @@
 import { AppError } from "../errors/app.error.js";
 import Product from "../models/product.model.js";
-import ProductInfo from "../models/rest/productInfo.model.js";
+import ProductInfo from "../models/productInfo.model.js";
 
 class ProductService {
   create = async (userId, payload) => {
