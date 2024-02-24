@@ -1,5 +1,5 @@
 import { AppError } from "../errors/app.error.js";
-import Product from "../models/product.model.js";
+import Product from "../models/rest/product.model.js";
 
 class ProductMiddlewares {
   ensureIdIsValid = async (req, res, next) => {

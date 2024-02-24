@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import User from "../models/rest/user.model.js";
 import { AppError } from "../errors/app.error.js";
 import jsonwebtoken from "jsonwebtoken";
 

@@ -1,5 +1,5 @@
 import { AppError } from "../errors/app.error.js";
-import User from "../models/user.model.js";
+import User from "../models/rest/user.model.js";
 import bycrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 
