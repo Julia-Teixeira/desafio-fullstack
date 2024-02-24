@@ -90,6 +90,17 @@ class ProductService {
     }));
     return product;
   };
+
+  retrieveAll = async () => {
+    const produtos = await Product.findAll({
+      include: [{ model: ProductInfo, attributes: ["price", "color"] }],
+    })
+
+    if(produtos.length === 0) {
+      throw new AppError("No registered products", 404)
+    }
+    return produtos;
+  };
 }
 
 export default ProductService;

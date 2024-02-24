@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import database from "../database/database.js";
+import User from "./user.model.js";
+import ProductInfo from "./productInfo.model.js";
 
 const Product = database.define("products", {
   id: {
@@ -24,16 +26,10 @@ const Product = database.define("products", {
   updatedAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
-  },
-  userId:{
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references:{
-      model: "users",
-      key: "id",
-      onDelete: "CASCADE"
-    }
   }
 });
+
+Product.User = Product.belongsTo(User);
+Product.ProductInfos = Product.hasMany(ProductInfo);
 
 export default Product;

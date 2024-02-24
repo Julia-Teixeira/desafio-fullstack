@@ -22,15 +22,5 @@ const ProductInfo = database.define("productInfos", {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
-  productId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "products",
-      key: "id",
-      onDelete: "CASCADE",
-    },
-  },
 });
-
 export default ProductInfo;

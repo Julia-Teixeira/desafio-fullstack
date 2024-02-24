@@ -7,6 +7,7 @@ const productController = new ProductController();
 const userMiddlewares = new UserMiddlewares();
 
 productRoutes.post("", userMiddlewares.isTokenValid, productController.create);
+productRoutes.get("", productController.getAll);
 
 
 // userRoutes.use("/:id", userMiddlewares.isTokenValid,userMiddlewares.userIdParams, userMiddlewares.isUserOwner)
