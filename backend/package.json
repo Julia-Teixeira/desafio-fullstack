@@ -5,8 +5,7 @@
   "main": "MobileMinds",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "vercel-build": "node src/server.js"
+    "start": "node src/server.js"
   },
   "author": "Julia Pereira Teixeira",
   "license": "ISC",
