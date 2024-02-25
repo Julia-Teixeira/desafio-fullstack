@@ -103,7 +103,7 @@ class ProductService {
 
   read = async (id) => {
     const product = await Product.findByPk(id, {
-      include: [{ model: ProductInfo, attributes: ["price", "color"] }],
+      include: [{ model: ProductInfo, attributes: ["id", "price", "color"] }],
     });
     return product;
   };
