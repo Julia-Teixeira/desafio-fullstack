@@ -21,10 +21,15 @@ class UserMiddlewares{
         }
         
         const token = authorization.split(" ")[1];
-        const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
-        res.locals.userTokenId = decoded.id
+
+        jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if(err) {
+                throw new AppError(err.message, 401);
+            }
+            res.locals.userTokenId = decoded.id
+            next();
+        });
         
-        next();
     }
 
     isUserOwner = async (req, res, next) => {

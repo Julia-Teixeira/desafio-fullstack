@@ -41,7 +41,7 @@ class ProductController {
 
   async deleteCor(req, res) {
     const productService = new ProductService();
-    await productService.deleteCor(req.params.colorId);
+    await productService.deleteCor(req.params.id);
     return res.sendStatus(204);
   }
 }

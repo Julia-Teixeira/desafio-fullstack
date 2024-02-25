@@ -27,7 +27,7 @@ export const returnProductSchema = createProductSchema.omit({ data: true }).exte
     userId: z.number(),
     createdAt: z.string(),
     updatedAt: z.string(),
-    productInfos: productInfo.array()
+    productInfos: dataProduct.extend({ id: z.number() }).array()
 });
 
 export type TCreateProduct = z.infer<typeof createProductSchema>;
