@@ -30,7 +30,7 @@ const ProductsPage = () => {
   return (
     <main className="flex min-h-screen flex-col p-12">
       <button onClick={() => logOut()}>Sair</button>
-      <Link href="/addProduct">Adicionar Produto</Link>
+      <Link href="/products/addProduct">Adicionar Produto</Link>
       <ListProducts />
     </main>
   );

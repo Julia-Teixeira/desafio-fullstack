@@ -2,9 +2,16 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "@/service/api";
 import { AxiosError } from "axios";
-import { ProductContextValues, TReturnProduct } from "./interfaces";
+import {
+  ProductContextValues,
+  TCreateProduct,
+  TReturnProduct,
+  TUpdateProduct,
+  updateProductSchema,
+} from "./interfaces";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export const ProductContext = createContext<ProductContextValues>(
   {} as ProductContextValues
@@ -23,6 +30,9 @@ export const ProductProvider = ({
 }) => {
   const [products, setProducts] = useState<TReturnProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<TReturnProduct>({} as TReturnProduct);
+
+  const router = useRouter();
 
   const getAllProducts = async () => {
     setLoading(true);
@@ -40,8 +50,90 @@ export const ProductProvider = ({
       .finally(() => setLoading(false));
   };
 
+  const createProduct = async (dataForm: TCreateProduct) => {
+    // setLoading(true);
+    const details = dataForm.data.map((item) => {
+      const newItem = {
+        color: item.color,
+        price: Number(item.price),
+      };
+      return newItem;
+    });
+
+    api
+      .post("products", [{ ...dataForm, data: details }])
+      .then(() => router.push("/products"))
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const getProduct = async (id: number) => {
+    setLoading(true);
+    api
+      .get(`/products/${id}`)
+      .then((res) => setProduct(res.data))
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const deleteProduct = async (id: number) => {
+    setLoading(true);
+    api
+      .delete(`/products/${id}`)
+      .then(() => {
+        toast.success("Produto excluido com sucesso");
+        router.push("/products");
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const editProduct = async (dataForm: TUpdateProduct, id: number) => {
+    const details = dataForm.productInfos.map((item) => {
+      const newItem = {
+        color: item.color,
+        price: Number(item.price),
+      };
+      return newItem;
+    });
+
+    api
+      .patch(`products/${id}`, { ...dataForm, productInfos: details })
+      .then(() => {
+        toast.success("Produto editado com sucesso");
+        router.push("/products");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const deledeCor = async (id: number) => {
+    api
+      .delete(`products/productInfos/${id}`)
+      .then(() => {
+        toast.success("Cor excluida com sucesso");
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
-    <ProductContext.Provider value={{ getAllProducts, products }}>
+    <ProductContext.Provider
+      value={{
+        getAllProducts,
+        products,
+        createProduct,
+        loading,
+        getProduct,
+        product,
+        deleteProduct,
+        editProduct,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

@@ -19,5 +19,6 @@ productRoutes.use(
 productRoutes.get("/:id", productController.getById);
 productRoutes.patch("/:id", productMiddlewares.isProductOwner, productController.update);
 productRoutes.delete("/:id", productMiddlewares.isProductOwner,productController.delete);
+productRoutes.delete("/productInfos/:colorId", productController.deleteCor);
 
 export default productRoutes;

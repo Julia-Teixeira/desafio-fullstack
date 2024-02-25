@@ -13,7 +13,7 @@ export const CardProduct = ({ product }: TCardProduct) => {
       <p className="text-sm">Marca: {product.brand}</p>
 
       <Link
-        href={`/editProduct/${product.id}`}
+        href={`/products/${product.id}`}
         key={product.id}
         className={`pointer`}
       >

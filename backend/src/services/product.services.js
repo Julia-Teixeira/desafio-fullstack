@@ -138,6 +138,12 @@ class ProductService {
 
     return(updatedProduct)
   }
+
+  deleteCor = async (id) => {
+    await ProductInfo.destroy({
+      where: { id },
+    })
+  }
 }
 
 export default ProductService;

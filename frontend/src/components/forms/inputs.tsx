@@ -11,7 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   type: string;
   register: UseFormRegisterReturn;
-  error:
+  error?:
     | string
     | FieldError
     | Merge<FieldError, FieldErrorsImpl<any>>
