@@ -12,8 +12,15 @@ class UserController {
 
   async getById(req, res) {
     const userService = new UserService();
+    let user
+    if(res.locals.userParams != undefined){
+      user = await userService.getById(res.locals.userParams)
+    } else {
+      user = await userService.getById(res.locals.userTokenId)
+    }
+  
 
-    return res.status(200).json(await userService.getById(res.locals.userParams));
+    return res.status(200).json(user);
   }
 
   async update(req, res) {
