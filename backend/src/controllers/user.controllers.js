@@ -12,7 +12,7 @@ class UserController {
 
   async getUser(req, res){
     const userService = new UserService();
-    return res.status(200).json(userService.getUser(res.locals.userTokenId)
+    return res.status(200).json(userService.getUser(res.locals.userTokenId))
   }
   
   async getById(req, res) {

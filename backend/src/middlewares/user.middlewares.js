@@ -5,17 +5,12 @@ import jsonwebtoken from "jsonwebtoken";
 class UserMiddlewares{
     userIdParams = async (req, res, next) => {
         const { id } = req.params;
-        const { userTokenId } = res.locals
-        let user
-        if (id != undefined){
-            user = await User.findByPk(id);
-        } else {
-             user = await User.findByPk(userTokenId);
-        }
-            
+        const user = await User.findByPk(id);
+
         if(!user) {
             throw new AppError("User not found.", 404 );
         }
+        
         const {password, ...withoutPassword} = user.dataValues
         res.locals.userParams = withoutPassword
         next();
