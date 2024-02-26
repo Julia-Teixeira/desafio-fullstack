@@ -9,7 +9,7 @@ userRoutes.post("", userController.create);
 userRoutes.post("/login", userController.login);
 
 userRoutes.get("/:id", userMiddlewares.isTokenValid,userMiddlewares.userIdParams, userController.getById)
-userRoutes.get("",  userMiddlewares.isTokenValid, userMiddlewares.userIdParams,userController.getById)
+userRoutes.get("",  userMiddlewares.isTokenValid,userController.getUser)
 
 userRoutes.use("/:id", userMiddlewares.isTokenValid,userMiddlewares.userIdParams, userMiddlewares.isUserOwner)
 userRoutes.patch("/:id", userController.update);
