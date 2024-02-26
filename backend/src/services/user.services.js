@@ -16,6 +16,10 @@ class UserService {
     return user;
   };
 
+  getUser = async ( id ) => {
+    return await User.findByPk(id);
+  }
+
   getById = async ( userParams, ) => {
     // const productUser = await Product.findAll({
     //   where: {
