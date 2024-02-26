@@ -2,7 +2,6 @@ import UserService from "../services/user.services.js";
 
 class UserController {
   async create(req, res) {
-    // #swagger.tags = ['Users']
     const userService = new UserService();
     const userData = req.body;
     const newUser = await userService.create(userData);

@@ -1,9 +1,7 @@
 import { AppError } from "../errors/app.error.js";
 import User from "../models/user.model.js";
-import Product from "../models/product.model.js";
 import bycrypt from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
-import ProductInfo from "../models/productInfo.model.js";
 
 class UserService {
   create = async (userData) => {
@@ -17,23 +15,12 @@ class UserService {
   };
 
   getUser = async ( id ) => {
-    return await User.findByPk(id);
+    const user = await User.findByPk(id);
+    const {password, ...withoutPassword} = user.dataValues
+    return withoutPassword;
   }
 
-  getById = async ( userParams, ) => {
-    // const productUser = await Product.findAll({
-    //   where: {
-    //     userId: userParams.id
-    //   },
-    //   attributes: ["id", "name", "brand", "model", "createdAt", "updatedAt"],
-    //   include: [
-    //     {
-    //       model: ProductInfo,
-    //       attributes: ["id","color", "price", "img"],
-    //     }
-    //   ]
-    // })
-
+  getById = async ( userParams ) => {
     return userParams;
   };
 
