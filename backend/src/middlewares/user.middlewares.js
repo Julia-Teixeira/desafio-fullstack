@@ -5,7 +5,8 @@ import jsonwebtoken from "jsonwebtoken";
 class UserMiddlewares{
     userIdParams = async (req, res, next) => {
         const { id } = req.params;
-        const user = await User.findByPk(id);
+        const { userTokenId } = res.locals
+        const user = await User.findByPk(id ? id : userTokenId);
         if(!user) {
             throw new AppError("User not found.", 404 );
         }
