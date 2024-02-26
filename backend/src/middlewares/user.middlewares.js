@@ -6,7 +6,13 @@ class UserMiddlewares{
     userIdParams = async (req, res, next) => {
         const { id } = req.params;
         const { userTokenId } = res.locals
-        const user = await User.findByPk(id ? id : userTokenId);
+        let user
+        if (id != undefined){
+            user = await User.findByPk(id);
+        } else {
+             user = await User.findByPk(userTokenId);
+        }
+            
         if(!user) {
             throw new AppError("User not found.", 404 );
         }
