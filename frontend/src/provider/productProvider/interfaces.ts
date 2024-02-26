@@ -7,8 +7,7 @@ const dataProduct = z.object({
 
 const productInfo = dataProduct.extend({
     id: z.number(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
+
 })
 
 export const createProductSchema = z.object({
@@ -33,14 +32,18 @@ export const returnProductSchema = createProductSchema.omit({ data: true }).exte
 export type TCreateProduct = z.infer<typeof createProductSchema>;
 export type TUpdateProduct = z.infer<typeof updateProductSchema>;
 export type TReturnProduct = z.infer<typeof returnProductSchema>;
+export type TProductInfo = z.infer<typeof productInfo>;
 
 export interface ProductContextValues {
     getAllProducts: () => Promise<void>,
     products: TReturnProduct[],
+    setProducts: React.Dispatch<React.SetStateAction<TReturnProduct[]>>,
     createProduct: (data: TCreateProduct) => Promise<void>,
     loading: boolean,
     product: TReturnProduct,
+    setProduct: React.Dispatch<React.SetStateAction<TReturnProduct>>,
     getProduct: (id: number) => Promise<void>
     deleteProduct: (id: number) => Promise<void>,
     editProduct: (data: TUpdateProduct, id: number) => Promise<void>,
+    deleteColor: (id: number) => Promise<void>
 }

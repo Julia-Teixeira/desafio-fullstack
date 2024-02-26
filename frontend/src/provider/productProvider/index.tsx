@@ -7,10 +7,8 @@ import {
   TCreateProduct,
   TReturnProduct,
   TUpdateProduct,
-  updateProductSchema,
 } from "./interfaces";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 export const ProductContext = createContext<ProductContextValues>(
@@ -51,7 +49,7 @@ export const ProductProvider = ({
   };
 
   const createProduct = async (dataForm: TCreateProduct) => {
-    // setLoading(true);
+    setLoading(true);
     const details = dataForm.data.map((item) => {
       const newItem = {
         color: item.color,
@@ -99,7 +97,7 @@ export const ProductProvider = ({
       };
       return newItem;
     });
-
+    console.log(dataForm);
     api
       .patch(`products/${id}`, { ...dataForm, productInfos: details })
       .then(() => {
@@ -112,7 +110,7 @@ export const ProductProvider = ({
       .finally(() => setLoading(false));
   };
 
-  const deledeCor = async (id: number) => {
+  const deleteColor = async (id: number) => {
     api
       .delete(`products/productInfos/${id}`)
       .then(() => {
@@ -126,12 +124,15 @@ export const ProductProvider = ({
       value={{
         getAllProducts,
         products,
+        setProducts,
         createProduct,
         loading,
         getProduct,
         product,
+        setProduct,
         deleteProduct,
         editProduct,
+        deleteColor,
       }}
     >
       {children}

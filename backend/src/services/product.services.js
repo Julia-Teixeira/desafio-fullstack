@@ -92,7 +92,10 @@ class ProductService {
 
   retrieveAll = async () => {
     const produtos = await Product.findAll({
-      include: [{ model: ProductInfo, attributes: ["price", "color"] }],
+      include: [
+        { model: ProductInfo, attributes: ["id", "price", "color", "img"] },
+      ],
+      order: [["id", "ASC"]],
     });
 
     if (produtos.length === 0) {
@@ -103,7 +106,9 @@ class ProductService {
 
   read = async (id) => {
     const product = await Product.findByPk(id, {
-      include: [{ model: ProductInfo, attributes: ["id", "price", "color"] }],
+      include: [
+        { model: ProductInfo, attributes: ["id", "price", "color", "img"] },
+      ],
     });
     return product;
   };
@@ -111,39 +116,42 @@ class ProductService {
   delete = async (id) => {
     await Product.destroy({
       where: { id },
-    })
-  }
+    });
+  };
 
   update = async (id, payload) => {
-    const {productInfos, ...product} = payload
+    const { productInfos, ...product } = payload;
 
-    await Product.update(product,{where: {id}})
-    
+    await Product.update(product, { where: { id } });
 
-    if(productInfos){
-      await Promise.all(productInfos.map(async (productInfo) => {
-        const findInfo = await ProductInfo.findOne({where: {productId: id, color: productInfo.color}})
-  
-        if(findInfo){
-          await ProductInfo.update(productInfo, {where: {id: findInfo.id}})
-        } else {
-          await ProductInfo.create({...productInfo, productId: id})
-        }
-      }))
+    if (productInfos) {
+      await Promise.all(
+        productInfos.map(async (productInfo) => {
+          if (productInfo.id) {
+            await ProductInfo.update(productInfo, {
+              where: { id: productInfo.id },
+            });
+          } else {
+            await ProductInfo.create({ ...productInfo, productId: id });
+          }
+        })
+      );
     }
 
     const updatedProduct = await Product.findByPk(id, {
-      include: [{ model: ProductInfo, attributes: ["price", "color"] }],
+      include: [
+        { model: ProductInfo, attributes: ["id", "price", "color", "img"] },
+      ],
     });
 
-    return(updatedProduct)
-  }
+    return updatedProduct;
+  };
 
-  deleteCor = async (id) => {
+  deleteColor = async (id) => {
     await ProductInfo.destroy({
       where: { id },
-    })
-  }
+    });
+  };
 }
 
 export default ProductService;

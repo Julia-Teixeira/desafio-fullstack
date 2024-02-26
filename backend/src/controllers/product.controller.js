@@ -1,3 +1,4 @@
+import { response } from "express";
 import ProductService from "../services/product.services.js";
 
 class ProductController {
@@ -39,9 +40,9 @@ class ProductController {
    return res.sendStatus(204);
   }
 
-  async deleteCor(req, res) {
+  async deleteColor(req, res) {
     const productService = new ProductService();
-    await productService.deleteCor(req.params.id);
+    await productService.deleteColor(req.params.id);
     return res.sendStatus(204);
   }
 }

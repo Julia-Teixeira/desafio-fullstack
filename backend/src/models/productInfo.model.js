@@ -14,6 +14,10 @@ import database from "../database/database.js";
     price: {
       type: DataTypes.DOUBLE,
     },
+    img: {
+      type: DataTypes.STRING,
+      defaultValue: "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg",
+    },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

@@ -6,7 +6,7 @@ app.listen(PORT, () => {
   db.authenticate()
   .then(() => {
   
-    db.sync();
+    db.sync( { alter: true } );
     console.log("Database connected.");
     console.log(`Server running on port ${PORT}`);
   })
