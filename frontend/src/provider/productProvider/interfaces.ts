@@ -45,5 +45,9 @@ export interface ProductContextValues {
     getProduct: (id: number) => Promise<void>
     deleteProduct: (id: number) => Promise<void>,
     editProduct: (data: TUpdateProduct, id: number) => Promise<void>,
-    deleteColor: (id: number) => Promise<void>
+    deleteColor: (id: number) => Promise<void>,
+    filteredProducts: TReturnProduct[],
+    setFilteredProducts: React.Dispatch<React.SetStateAction<TReturnProduct[]>>,
+    searchProduct: string
+    setSearchProduct: React.Dispatch<React.SetStateAction<string>>,
 }

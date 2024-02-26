@@ -7,7 +7,7 @@ const middleware = (request: NextRequest) => {
 
 	if (
 		!token &&
-		(url.includes("/products") || url.includes("/addProduct/") || url.includes("/editProduct/")) 
+		(url.includes("/products") || url.includes("/addProduct/") || url.includes("/editProduct/") || url.includes("/myProducts"))	 
 	) {
 		return NextResponse.redirect(new URL("/", url));
 	}

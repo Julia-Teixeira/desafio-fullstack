@@ -19,9 +19,9 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`flex items-center justify-evenly text-xl md:text-lg 
-        lg:text-2xl min-w-[200px] max-w-[379px] w-full h-[50px] ${color} rounded-md
-      text-white`}
+      className={`flex items-center justify-evenly text-base md:text-lg
+        lg:text-xl min-w-[100px] max-w-[379px] w-full h-[50px] ${color} rounded-md
+      `}
       {...rest}
     >
       {children}

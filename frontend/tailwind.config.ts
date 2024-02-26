@@ -8,10 +8,26 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        thistle: "#D8BFD8",
+        plum: "#DDA0DD",
+   
+      },
+      keyframes: {
+        drop: {
+          "0%": {
+            transform: "translateY(-60%)",
+          },
+        },
+        show: {
+          "0%": {
+            transform: "scale(0.4)",
+          },
+        },
+      },
+      animation: {
+        modal: "drop 0.5s ease-in-out",
+        show: "show 0.7s ease-in-out",
       },
     },
   },

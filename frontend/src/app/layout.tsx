@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/provider/authProvider";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { ProductProvider } from "@/provider/productProvider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
-const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Mobile Minds",
@@ -21,13 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-thistle`}>
         <AuthProvider>
-          <ProductProvider>{children}</ProductProvider>
+          <ProductProvider>
+            <Suspense fallback={<Loading />}>{children}</Suspense>
+          </ProductProvider>
         </AuthProvider>
         <ToastContainer
           position="top-right"
-          autoClose={2000}
+          autoClose={1000}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick

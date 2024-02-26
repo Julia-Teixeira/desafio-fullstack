@@ -9,6 +9,7 @@ import {
   RegisterData,
   registerSchema,
 } from "@/provider/authProvider/interfaces";
+import { RiLoader4Line } from "react-icons/ri";
 
 const RegisterForm = () => {
   const { loading, signUp } = useAuth();
@@ -18,6 +19,7 @@ const RegisterForm = () => {
     formState: { isValid, errors },
   } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
+    mode: "onChange",
   });
 
   const onSubmit = (data: RegisterData) => {
@@ -25,12 +27,12 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center">
+    <div className="flex flex-col gap-2 items-center justify-center  bg-white p-9 rounded">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-[380px] w-full flex flex-col"
       >
-        <h1 className="text-gray-100 text-xl md:text-2xl text-center">
+        <h1 className="text-gray-900 text-xl md:text-2xl text-center">
           Cadastre-se
         </h1>
         <Input
@@ -57,26 +59,36 @@ const RegisterForm = () => {
           register={register("password", { required: true })}
           error={errors?.password?.message}
         />
-
-        <Button
-          text={loading ? "Carregando..." : "Cadastrar"}
-          type="submit"
-          color="bg-gray-600 hover:bg-gray-700"
+        <Input
+          type="password"
+          id="confimrPassword"
+          label="Confirmar Senha"
+          placeholder="***********"
+          register={register("confirmPassword", { required: true })}
+          error={errors?.confirmPassword?.message}
         />
+
+        <div className="w-[200px] m-auto mt-4 mb-6">
+          <Button
+            type="submit"
+            color={`bg-thistle text-gray-700 hover:bg-plum hover:text-gray-900 
+          transition-all ease-in-out duration-300`}
+          >
+            {!loading ? (
+              "Cadastrar"
+            ) : (
+              <RiLoader4Line size={30} color="#fff" className="animate-spin" />
+            )}
+          </Button>
+        </div>
       </form>
 
-      <div className="w-[300px] h-[1px] bg-white mt-6" />
       <div className="max-w-[380px] w-full flex flex-col items-center px-4">
-        <p className="text-purple800 text-xl md:text-2xl text-center my-6">
-          Já possui uma <br />
-          conta?
-        </p>
-        <Link href="/" className="w-full">
-          <Button
-            text="Voltar Para o Login"
-            type="button"
-            color="bg-gray-600 hover:bg-gray-700"
-          />
+        <Link
+          href="/"
+          className="text-purple-700 hover:text-purple-900 transition-all ease-in-out duration-300 border-b-2 border-purple-700"
+        >
+          Voltar Para o Login
         </Link>
       </div>
     </div>

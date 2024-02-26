@@ -29,6 +29,10 @@ export const ProductProvider = ({
   const [products, setProducts] = useState<TReturnProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState<TReturnProduct>({} as TReturnProduct);
+  const [filteredProducts, setFilteredProducts] = useState<TReturnProduct[]>(
+    []
+  );
+  const [searchProduct, setSearchProduct] = useState("");
 
   const router = useRouter();
 
@@ -133,6 +137,10 @@ export const ProductProvider = ({
         deleteProduct,
         editProduct,
         deleteColor,
+        setFilteredProducts,
+        filteredProducts,
+        setSearchProduct,
+        searchProduct,
       }}
     >
       {children}

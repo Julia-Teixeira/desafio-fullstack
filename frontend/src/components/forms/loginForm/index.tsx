@@ -6,6 +6,7 @@ import Link from "next/link";
 import Button from "@/components/button";
 import { LoginData, loginSchema } from "@/provider/authProvider/interfaces";
 import { useAuth } from "@/provider/authProvider";
+import { RiLoader4Line } from "react-icons/ri";
 
 export const LoginForm = () => {
   const { loading, signIn } = useAuth();
@@ -22,12 +23,17 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-center">
+    <div
+      className={`max-w-[380px] w-full flex flex-col gap-2 items-center 
+    justify-center bg-white p-4 sm:p-9 rounded`}
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-[380px] w-full flex flex-col"
+        className="w-full flex flex-col align-center mb-8"
       >
-        <h1 className="text-gray-100 text-xl md:text-2xl text-center">Login</h1>
+        <h1 className="text-gray-900 font-medium text-lg md:text-xl text-center mb-4">
+          Faça seu login
+        </h1>
         <Input
           type="text"
           id="email"
@@ -45,25 +51,27 @@ export const LoginForm = () => {
           error={errors?.password?.message}
         />
 
-        <Button
-          text={loading ? "Carregando..." : "Entrar"}
-          type="submit"
-          color="bg-gray-600 hover:bg-gray-700"
-        />
-      </form>
-
-      <div className="w-[300px] h-[1px] bg-white mt-6" />
-      <div className="max-w-[380px] w-full flex flex-col items-center px-4">
-        <p className="text-purple800 text-xl md:text-2xl text-center my-6">
-          Ainda não possui uma <br />
-          conta?
-        </p>
-        <Link href="/register" className="w-full">
+        <div className="w-[200px] m-auto mt-4">
           <Button
-            text="Criar sua conta"
-            type="button"
-            color="bg-gray-600 hover:bg-gray-700"
-          />
+            type="submit"
+            color={`bg-thistle text-gray-700 hover:bg-plum hover:text-gray-900 
+            transition-all ease-in-out duration-300`}
+          >
+            {!loading ? (
+              "Entrar"
+            ) : (
+              <RiLoader4Line size={30} color="#fff" className="animate-spin" />
+            )}
+          </Button>
+        </div>
+      </form>
+      <div className=" flex flex-col items-center">
+        <Link
+          href="/register"
+          className={`w-full text-purple-700 hover:text-purple-900 
+          transition-all ease-in-out duration-300 border-b-2 border-purple-700`}
+        >
+          Ainda não possui conta?
         </Link>
       </div>
     </div>

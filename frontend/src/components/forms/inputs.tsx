@@ -27,15 +27,15 @@ export const Input = ({
   ...rest
 }: InputProps) => {
   return (
-    <fieldset className="flex flex-col gap-1 mb-4">
-      <label htmlFor={id} className="font-semibold text-base md:text-lg">
+    <fieldset className="flex flex-col gap-2 mb-4">
+      <label htmlFor={id} className="font-medium text-base">
         {label}
       </label>
       <input
         type={type}
         id={id}
-        className={`w-full h-[50px] md:h-11 rounded-md text-purple800 pl-4
-         text-gray-800 disabled:text-gray-300`}
+        className={`w-full h-[50px] md:h-11 rounded-md text-purple-800 pl-4
+         disabled:text-gray-300 border-b-2 outline-none border-b-violet-800 `}
         {...rest}
         {...register}
       />

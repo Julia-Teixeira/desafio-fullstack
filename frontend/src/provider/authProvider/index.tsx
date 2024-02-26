@@ -54,6 +54,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .finally(() => setLoading(false));
   };
 
+  const logOut = () => {
+    Cookies.remove("user.token");
+    toast.success("Deslogado com sucesso");
+    setTimeout(() => {
+      router.push("/");
+    }, 2000);
+  };
+
   const signUp = async (data: RegisterData) => {
     setLoading(true);
     api
@@ -74,7 +82,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signIn, loading, signUp }}>
+    <AuthContext.Provider value={{ signIn, loading, signUp, logOut }}>
       {children}
     </AuthContext.Provider>
   );
