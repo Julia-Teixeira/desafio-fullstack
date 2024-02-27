@@ -34,8 +34,8 @@ export const Input = ({
       <input
         type={type}
         id={id}
-        className={`w-full h-[50px] md:h-11 rounded-md text-purple-800 pl-4
-         disabled:text-gray-300 border-b-2 outline-none border-b-violet-800 `}
+        className={`w-full h-[50px] md:h-11 rounded-md text-purple-900 pl-4
+         disabled:text-gray-300 border-b-2 outline-none bg-transparent border-b-violet-800 `}
         {...rest}
         {...register}
       />

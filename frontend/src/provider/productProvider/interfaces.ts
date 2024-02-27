@@ -3,6 +3,7 @@ import { z } from "zod";
 const dataProduct = z.object({
     price: z.string(),
     color: z.string(),
+    img: z.string(),
 })
 
 const productInfo = dataProduct.extend({
@@ -14,6 +15,7 @@ export const createProductSchema = z.object({
     name: z.string().nonempty("Nome é obrigatório"),
     brand: z.string().nonempty("Marca é obrigatória"),
     model: z.string().nonempty("Modelo é obrigatório"),
+
     data: dataProduct.array()
 });
 
@@ -26,7 +28,7 @@ export const returnProductSchema = createProductSchema.omit({ data: true }).exte
     userId: z.number(),
     createdAt: z.string(),
     updatedAt: z.string(),
-    productInfos: dataProduct.extend({ id: z.number() }).array()
+    productInfos: dataProduct.extend({ id: z.number(),}).array()
 });
 
 export type TCreateProduct = z.infer<typeof createProductSchema>;

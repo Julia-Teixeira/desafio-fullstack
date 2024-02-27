@@ -92,9 +92,7 @@ class ProductService {
 
   retrieveAll = async () => {
     const produtos = await Product.findAll({
-      include: [
-        { model: ProductInfo, attributes: ["id", "price", "color", "img"] },
-      ],
+      include: [{ model: ProductInfo, attributes: ["id","price", "color", "img"] }],
       order: [["id", "ASC"]],
     });
 
@@ -106,9 +104,7 @@ class ProductService {
 
   read = async (id) => {
     const product = await Product.findByPk(id, {
-      include: [
-        { model: ProductInfo, attributes: ["id", "price", "color", "img"] },
-      ],
+      include: [{ model: ProductInfo, attributes: ["id","price", "color", "img"] }],
     });
     return product;
   };
@@ -116,42 +112,37 @@ class ProductService {
   delete = async (id) => {
     await Product.destroy({
       where: { id },
-    });
-  };
+    })
+  }
 
   update = async (id, payload) => {
-    const { productInfos, ...product } = payload;
+    const {productInfos, ...product} = payload
 
-    await Product.update(product, { where: { id } });
-
-    if (productInfos) {
-      await Promise.all(
-        productInfos.map(async (productInfo) => {
-          if (productInfo.id) {
-            await ProductInfo.update(productInfo, {
-              where: { id: productInfo.id },
-            });
-          } else {
-            await ProductInfo.create({ ...productInfo, productId: id });
-          }
-        })
-      );
-    }
-
+    await Product.update(product,{where: {id}})
     const updatedProduct = await Product.findByPk(id, {
-      include: [
-        { model: ProductInfo, attributes: ["id", "price", "color", "img"] },
-      ],
+      include: [{ model: ProductInfo, attributes: ["id","price", "color", "img"] }],
     });
 
-    return updatedProduct;
-  };
+    return(updatedProduct)
+  }
+  
+  createColor = async (id,payload) => {
+    const color = await ProductInfo.create({...payload, productId: id})
+    return color
+  }
+
+  updateColor = async (id, payload) => {
+    await ProductInfo.update(payload, {where: {id}})
+
+    return await ProductInfo.findByPk(id)
+  }
 
   deleteColor = async (id) => {
     await ProductInfo.destroy({
       where: { id },
-    });
-  };
+    })
+  }
+
 }
 
 export default ProductService;

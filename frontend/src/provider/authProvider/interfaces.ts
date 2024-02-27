@@ -20,7 +20,6 @@ export type RegisterData = z.infer<typeof registerSchema>;
 
 export interface AuthContextValues{
   signIn: (data: LoginData) => void;
-  logOut: () => void;
   loading: boolean;
   signUp: (data: RegisterData) => void;
 }

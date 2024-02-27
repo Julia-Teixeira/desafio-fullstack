@@ -10,6 +10,8 @@ import {
 } from "./interfaces";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { useUser } from "../userProvider";
 
 export const ProductContext = createContext<ProductContextValues>(
   {} as ProductContextValues
@@ -33,6 +35,7 @@ export const ProductProvider = ({
     []
   );
   const [searchProduct, setSearchProduct] = useState("");
+  const { getUserById } = useUser();
 
   const router = useRouter();
 
@@ -80,6 +83,8 @@ export const ProductProvider = ({
         console.log(err);
       })
       .finally(() => setLoading(false));
+
+    await getUserById(product.userId);
   };
 
   const deleteProduct = async (id: number) => {
@@ -123,6 +128,13 @@ export const ProductProvider = ({
       .finally(() => setLoading(false));
   };
 
+  // useEffect(() => {
+  //   const token = Cookies.get("user.token");
+  //   if (token) {
+  //     api.defaults.headers.common.authorization = `Bearer ${token}`;
+  //     (async () => await getAllProducts())();
+  //   }
+  // }, []);
   return (
     <ProductContext.Provider
       value={{

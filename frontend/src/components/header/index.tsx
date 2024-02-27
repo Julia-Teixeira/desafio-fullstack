@@ -1,15 +1,15 @@
 "use client";
 
-import { useAuth } from "@/provider/authProvider";
+import { useUser } from "@/provider/userProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
   const path = usePathname();
-  const { logOut } = useAuth();
+  const { logOut } = useUser();
 
   return (
-    <div className="flex flex-col items-center  px-8 md:px-24">
+    <div className="flex max-w-[1200px] flex-col items-center m-auto">
       <header className="w-full flex justify-between my-6 flex-wrap text-purple-100">
         <Link href="/products" className="pointer">
           MobleMinds

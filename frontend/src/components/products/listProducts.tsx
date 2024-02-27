@@ -17,9 +17,9 @@ export const ListProducts = () => {
     <div>
       <div className="my-4 flex justify-between">
         {path == "/products/myProducts" ? (
-          <h1>Meus Produtos</h1>
+          <h1 className="text-3xl font-bold">Meus Produtos</h1>
         ) : (
-          <h1>Todos os Produtos</h1>
+          <h1 className="text-3xl font-bold">Todos os Produtos</h1>
         )}
         <Search />
       </div>
@@ -35,7 +35,7 @@ export const ListProducts = () => {
         </span>
       )}
       <Suspense fallback={<Loading />}>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+        <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-4">
           {filteredProducts.length > 0
             ? filteredProducts.map((product) => (
                 <CardProduct product={product} key={product.id} />

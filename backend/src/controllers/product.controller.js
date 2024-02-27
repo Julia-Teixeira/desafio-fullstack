@@ -40,11 +40,29 @@ class ProductController {
    return res.sendStatus(204);
   }
 
+  async createColor(req, res) {
+    const productService = new ProductService();
+    const colorData = req.body;
+    const color = await productService.createColor(
+      req.params.id, colorData
+    )
+    return res.status(201).json(color);
+  }
+
+  async updateColor(req, res) {
+    const productService = new ProductService();
+    const updatedData = await productService.updateColor(
+      req.params.id, req.body
+    )
+    return res.status(200).json(updatedData);
+  }
+
   async deleteColor(req, res) {
     const productService = new ProductService();
     await productService.deleteColor(req.params.id);
     return res.sendStatus(204);
   }
+
 }
 
 export default ProductController;

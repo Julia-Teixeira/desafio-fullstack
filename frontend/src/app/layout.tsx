@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import { ProductProvider } from "@/provider/productProvider";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { UserProvider } from "@/provider/userProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-thistle`}>
         <AuthProvider>
-          <ProductProvider>
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </ProductProvider>
+          <UserProvider>
+            <ProductProvider>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </ProductProvider>
+          </UserProvider>
         </AuthProvider>
         <ToastContainer
           position="top-right"

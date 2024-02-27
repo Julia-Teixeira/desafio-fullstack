@@ -17,7 +17,7 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <section className="w-full flex min-h-screen flex-col">
+    <section className="w-full max-w-[1200px] flex min-h-screen flex-col">
       <ListProducts />
     </section>
   );

@@ -10,8 +10,10 @@ const userMiddlewares = new UserMiddlewares();
 
 productRoutes.post("", userMiddlewares.isTokenValid, productController.create);
 productRoutes.get("", userMiddlewares.isTokenValid, productController.getAll);
-productRoutes.delete("/productInfos/:id", userMiddlewares.isTokenValid,productController.deleteColor);
 
+productRoutes.post("/:id/productInfos", userMiddlewares.isTokenValid,productController.createColor);
+productRoutes.delete("/productInfos/:id", userMiddlewares.isTokenValid,productController.deleteColor);
+productRoutes.patch("/productInfos/:id", userMiddlewares.isTokenValid,productController.updateColor);
 
 productRoutes.use(
   "/:id",
