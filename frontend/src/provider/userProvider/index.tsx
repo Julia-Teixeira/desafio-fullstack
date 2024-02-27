@@ -65,7 +65,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const token = Cookies.get("user.token");
     if (token) {
-      (async () => await getUserData(token))();
     } else {
       Cookies.remove("user.token");
       router.push("/");
@@ -82,6 +81,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         getUserById,
         productOwner,
         setProductOwner,
+        getUserData,
       }}
     >
       {children}

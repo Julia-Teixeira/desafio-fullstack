@@ -10,11 +10,11 @@ export const CardProduct = ({ product }: TCardProduct) => {
   return (
     <li className="flex flex-col w-[290px] bg-gray-100 p-4 text-black rounded items-center">
       <Image
-        src={product.productInfos[0].img}
+        src={product.productInfos[0].img!}
         width={200}
         height={200}
         alt={product.name}
-        className="mb-2"
+        className="mb-2 w-[200px] h-[200px]"
       />
       <h1>
         {product.name}{" "}

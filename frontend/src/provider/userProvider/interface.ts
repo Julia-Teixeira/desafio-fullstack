@@ -18,4 +18,5 @@ export interface UserContextValues{
     getUserById: (id: number) => Promise<void>;
     productOwner: TUser | null;
     setProductOwner: React.Dispatch<React.SetStateAction<TUser | null>>
+    getUserData: (token: string) => Promise<void>;
   }

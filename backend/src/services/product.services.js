@@ -4,6 +4,7 @@ import ProductInfo from "../models/productInfo.model.js";
 
 class ProductService {
   create = async (userId, payload) => {
+    const urlImage = "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
     let productData;
     if (Array.isArray(payload)) {
       const products = payload.map((product) => {
@@ -14,6 +15,7 @@ class ProductService {
           data: product.data.map((item) => ({
             price: item.price,
             color: item.color,
+            img: item.img ? item.img : urlImage,
           })),
         };
       });
@@ -29,6 +31,7 @@ class ProductService {
             {
               price: payload.price,
               color: payload.details.color,
+              img: payload.img ? payload.img : urlImage,
             },
           ],
         },
@@ -45,6 +48,7 @@ class ProductService {
             {
               price: payload.price,
               color: payload.color,
+              img: payload.img ? payload.img : urlImage,
             },
           ],
         },
@@ -67,6 +71,7 @@ class ProductService {
           productData[index].data.map((item) => ({
             price: item.price,
             color: item.color,
+            img: item.img,
             productId: product.id,
           }))
         ).then((productInfo) => productInfo);

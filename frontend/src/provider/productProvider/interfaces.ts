@@ -1,27 +1,33 @@
 import { z } from "zod";
 
-const dataProduct = z.object({
+export const dataProduct = z.object({
     price: z.string(),
     color: z.string(),
-    img: z.string(),
+    img: z.string().max(255, "Endereço da imagem ultrapassou o limite de 255 caracteres")
 })
 
-const productInfo = dataProduct.extend({
+export const productInfo = dataProduct.extend({
     id: z.number(),
 
 })
 
 export const createProductSchema = z.object({
-    name: z.string().nonempty("Nome é obrigatório"),
-    brand: z.string().nonempty("Marca é obrigatória"),
-    model: z.string().nonempty("Modelo é obrigatório"),
+    name: z.string({
+        required_error: "Nome obrigatório",
+    }),
+    brand: z.string({
+        required_error: "Marca obrigatória",
+    }),
+    model: z.string({
+        required_error: "Model obrigatório",
+    }),
 
     data: dataProduct.array()
 });
 
 export const updateProductSchema = createProductSchema.omit({ data: true }).extend({
-    productInfos: dataProduct.array()
-});
+    productInfos: dataProduct.array().optional(),
+}).partial()
 
 export const returnProductSchema = createProductSchema.omit({ data: true }).extend({
     id: z.number(),
@@ -34,6 +40,7 @@ export const returnProductSchema = createProductSchema.omit({ data: true }).exte
 export type TCreateProduct = z.infer<typeof createProductSchema>;
 export type TUpdateProduct = z.infer<typeof updateProductSchema>;
 export type TReturnProduct = z.infer<typeof returnProductSchema>;
+export type TUpdateProductInfo = z.infer<typeof dataProduct>;
 export type TProductInfo = z.infer<typeof productInfo>;
 
 export interface ProductContextValues {
@@ -42,6 +49,7 @@ export interface ProductContextValues {
     setProducts: React.Dispatch<React.SetStateAction<TReturnProduct[]>>,
     createProduct: (data: TCreateProduct) => Promise<void>,
     loading: boolean,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
     product: TReturnProduct,
     setProduct: React.Dispatch<React.SetStateAction<TReturnProduct>>,
     getProduct: (id: number) => Promise<void>
@@ -52,4 +60,6 @@ export interface ProductContextValues {
     setFilteredProducts: React.Dispatch<React.SetStateAction<TReturnProduct[]>>,
     searchProduct: string
     setSearchProduct: React.Dispatch<React.SetStateAction<string>>,
+    updateColor: (dataForm: TUpdateProductInfo, id: number) => Promise<void>
+    createColor: (dataForm: TUpdateProductInfo, id: number) => Promise<void>
 }

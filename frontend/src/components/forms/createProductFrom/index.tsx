@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import Button from "@/components/button";
 import { useProduct } from "@/provider/productProvider";
+import { RiLoader4Line } from "react-icons/ri";
 
 export const CreateProductForm = () => {
   const [countColor, setCountColor] = useState<number[]>([0]);
@@ -38,9 +39,10 @@ export const CreateProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(createProduto)}>
-      <h1>Adicionar Produto</h1>
-
+    <form
+      onSubmit={handleSubmit(createProduto)}
+      className="max-w-[420px] w-full"
+    >
       <Input
         id="name"
         label="Nome"
@@ -69,11 +71,19 @@ export const CreateProductForm = () => {
         register={register("model", { required: true })}
         error={errors?.model?.message}
       />
-      <div>
-        <h3>Detalhes</h3>
+      <div className="mt-4">
+        <h2 className="mb-2">Detalhes</h2>
         {countColor.map((item) => (
           <div key={item}>
-            <span>Detalhe {item + 1}</span>
+            <Input
+              id="img"
+              label="Imagem"
+              placeholder="url"
+              disabled={loading}
+              type="text"
+              register={register(`data.${item}.img`, { required: false })}
+            />
+
             <Input
               id="price"
               label="Preço"
@@ -93,19 +103,36 @@ export const CreateProductForm = () => {
           </div>
         ))}
 
-        <button type="button" onClick={() => addColor()}>
+        <button
+          type="button"
+          onClick={() => addColor()}
+          className="hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 "
+        >
           Adicionar mais uma cor?
         </button>
         {countColor.length > 1 && (
-          <button type="button" onClick={() => removeColor()}>
+          <button
+            type="button"
+            onClick={() => removeColor()}
+            className="hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 "
+          >
             Remover uma cor?
           </button>
         )}
       </div>
-      <Button
-        type="submit"
-        text={loading ? "Cadastrando..." : "Criar"}
-      ></Button>
+      <div className="flex justify-center w-[150px]">
+        <Button
+          type="submit"
+          color={`bg-purple-500 text-gray-100 hover:bg-purple-600 
+          transition-all ease-in-out duration-300`}
+        >
+          {!loading ? (
+            "Cadastrar"
+          ) : (
+            <RiLoader4Line size={30} color="#fff" className="animate-spin" />
+          )}
+        </Button>
+      </div>
     </form>
   );
 };
