@@ -62,4 +62,5 @@ export interface ProductContextValues {
     setSearchProduct: React.Dispatch<React.SetStateAction<string>>,
     updateColor: (dataForm: TUpdateProductInfo, id: number) => Promise<void>
     createColor: (dataForm: TUpdateProductInfo, id: number) => Promise<void>
+    myProducts: TReturnProduct[]
 }

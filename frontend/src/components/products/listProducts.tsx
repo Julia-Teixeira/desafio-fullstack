@@ -7,10 +7,17 @@ import { MdSearchOff } from "react-icons/md";
 import Search from "../search";
 import { Suspense } from "react";
 import Loading from "@/app/products/loading";
+import { useUser } from "@/provider/userProvider";
 
 export const ListProducts = () => {
-  const { products, filteredProducts, setSearchProduct, setFilteredProducts } =
-    useProduct();
+  const {
+    products,
+    filteredProducts,
+    setSearchProduct,
+    setFilteredProducts,
+    myProducts,
+  } = useProduct();
+
   const path = usePathname();
 
   return (
@@ -38,6 +45,11 @@ export const ListProducts = () => {
         <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-4">
           {filteredProducts.length > 0
             ? filteredProducts.map((product) => (
+                <CardProduct product={product} key={product.id} />
+              ))
+            : path == "/products/myProducts"
+            ? myProducts &&
+              myProducts.map((product) => (
                 <CardProduct product={product} key={product.id} />
               ))
             : products &&

@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "@/service/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { UserContextValues, TUser } from "./interface";
+import { UserContextValues, TUser, TEditUser } from "./interface";
 import Cookies from "js-cookie";
 
 export const UserContext = createContext<UserContextValues>(
@@ -59,17 +59,52 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(null);
       Cookies.remove("user.token");
       router.push("/");
-    }, 2000);
+    }, 1000);
+  };
+
+  const editUser = async (data: TEditUser) => {
+    setLoading(true);
+    api
+      .patch(`users/${user?.id}`, data)
+      .then((res) => {
+        setUser(res.data);
+        toast.success("Usuário editado com sucesso");
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  };
+
+  const editPassword = async (data: { password: string }) => {
+    setLoading(true);
+    api
+      .patch(`users/${user?.id}`, data)
+      .then((res) => toast.success("Senha editada com sucesso"))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  };
+
+  const deleteUser = async () => {
+    setLoading(true);
+    api
+      .delete(`users/${user?.id}`)
+      .then(() => {
+        toast.success("Usuário excluido com sucesso");
+        logOut();
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     const token = Cookies.get("user.token");
     if (token) {
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
+      (async () => await getUserData(token))();
     } else {
       Cookies.remove("user.token");
       router.push("/");
     }
-  });
+    setLoading(false);
+  }, []);
 
   return (
     <UserContext.Provider
@@ -77,11 +112,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         setUser,
         loading,
+        setLoading,
         logOut,
         getUserById,
         productOwner,
         setProductOwner,
         getUserData,
+        editUser,
+        deleteUser,
+        editPassword,
       }}
     >
       {children}

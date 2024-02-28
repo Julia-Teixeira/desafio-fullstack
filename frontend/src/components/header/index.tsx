@@ -38,7 +38,7 @@ const Header = () => {
             Adicionar Produto
           </Link>
           <Link
-            href="/products/addProduct"
+            href="/me"
             className="hover:text-purple-200 hover:underline hover:underline-offset-4"
           >
             Perfil

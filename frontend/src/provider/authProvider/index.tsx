@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         Cookies.set("user.token", res.data.token);
         setTimeout(() => {
           router.push("/products");
-        }, 2000);
+        }, 1000);
       })
       .catch((err) => {
         if (err instanceof AxiosError) {
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         toast.success("Cadastrado com sucesso!");
         setTimeout(() => {
           router.push("/");
-        }, 2000);
+        }, 1000);
       })
       .catch((err) => {
         if (err instanceof AxiosError) {

@@ -36,13 +36,10 @@ export const ProductProvider = ({
     []
   );
   const [searchProduct, setSearchProduct] = useState("");
-  const { getUserById } = useUser();
+  const { getUserById, user } = useUser();
+  const myProducts = products?.filter((product) => product.userId === user?.id);
 
   const router = useRouter();
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   const getAllProducts = async () => {
     setLoading(true);
@@ -73,7 +70,13 @@ export const ProductProvider = ({
 
     api
       .post("products", [{ ...dataForm, data: details }])
-      .then(() => router.push("/products"))
+      .then((res) => {
+        toast.success("Produto criado com sucesso");
+        setProducts([...products, res.data]);
+        setTimeout(() => {
+          router.push("/products/myProducts");
+        }, 1000);
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -100,7 +103,9 @@ export const ProductProvider = ({
       .delete(`/products/${id}`)
       .then(() => {
         toast.success("Produto excluido com sucesso");
-        router.push("/products");
+        setTimeout(() => {
+          router.push("/products/myProducts");
+        }, 1000);
       })
       .finally(() => setLoading(false));
   };
@@ -170,6 +175,16 @@ export const ProductProvider = ({
       })
       .finally(() => setLoading(false));
   };
+
+  useEffect(() => {
+    const token = Cookies.get("user.token");
+    if (token) {
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
+      (async () => await getAllProducts())();
+    }
+    setLoading(false);
+  }, [products]);
+
   return (
     <ProductContext.Provider
       value={{
@@ -191,6 +206,7 @@ export const ProductProvider = ({
         searchProduct,
         updateColor,
         createColor,
+        myProducts,
       }}
     >
       {children}

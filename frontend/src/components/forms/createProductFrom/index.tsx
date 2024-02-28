@@ -102,23 +102,24 @@ export const CreateProductForm = () => {
             />
           </div>
         ))}
-
-        <button
-          type="button"
-          onClick={() => addColor()}
-          className="hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 "
-        >
-          Adicionar mais uma cor?
-        </button>
-        {countColor.length > 1 && (
+        <div className="flex justify-between items-center">
           <button
             type="button"
-            onClick={() => removeColor()}
+            onClick={() => addColor()}
             className="hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 "
           >
-            Remover uma cor?
+            Adicionar mais uma cor?
           </button>
-        )}
+          {countColor.length > 1 && (
+            <button
+              type="button"
+              onClick={() => removeColor()}
+              className="hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 "
+            >
+              Remover uma cor?
+            </button>
+          )}
+        </div>
       </div>
       <div className="flex justify-center w-[150px]">
         <Button

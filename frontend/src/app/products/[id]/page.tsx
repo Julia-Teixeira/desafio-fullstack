@@ -10,9 +10,8 @@ import Loading from "../loading";
 
 const ProductPage = () => {
   const params = useParams();
-  const { getProduct, product, deleteProduct, loading, setLoading } =
-    useProduct();
-  const { user, productOwner, getUserData } = useUser();
+  const { getProduct, product, deleteProduct, loading } = useProduct();
+  const { user, getUserData } = useUser();
   const createdAt = new Date(product?.createdAt);
 
   useEffect(() => {
@@ -21,22 +20,23 @@ const ProductPage = () => {
     (async () => await getUserData(token!))();
   }, []);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <Suspense fallback={loading && <Loading />}>
       <div className="flex w-full max-w-[1200px] min-h-screen flex-col py-4">
         {product && (
           <section className="flex flex-col text-black">
             <div className="flex flex-col gap-4">
               <span className="text-sm text-gray-500">
-                Adicionando em: {createdAt.toDateString()} pelo usuário{" "}
-                {productOwner && productOwner.name}
+                Adicionando em: {createdAt.toLocaleDateString("pt-BR")}
               </span>
               <div className="flex gap-2 justify-between items-center">
                 <div className="flex flex-col gap-4">
-                  <h1>Nome: {product.name}</h1>
+                  <h1 className="text-3xl font-bold"> {product.name}</h1>
                   <div>
-                    <h3 className="text-sm">Model: {product.model}</h3>
-                    <h3 className="text-sm">Marca: {product.brand}</h3>
+                    <h3 className="text-xl">Modelo: {product.model}</h3>
+                    <h3 className="text-xl">Marca: {product.brand}</h3>
                   </div>
                 </div>
 
@@ -45,12 +45,15 @@ const ProductPage = () => {
                     <Link
                       href={`/products/${product.id}/edit`}
                       key={product.id}
-                      className={`pointer`}
+                      className={`hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 text-lg`}
                     >
                       Editar Produto
                     </Link>
 
-                    <button onClick={() => deleteProduct(Number(product.id))}>
+                    <button
+                      onClick={() => deleteProduct(Number(product.id))}
+                      className="hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 text-lg"
+                    >
                       Deletar produto
                     </button>
                   </div>
