@@ -9,6 +9,7 @@ import { Suspense, useEffect } from "react";
 import Loading from "@/app/products/loading";
 import Cookies from "js-cookie";
 import { api } from "@/service/api";
+import { useUser } from "@/provider/userProvider";
 
 export const ListProducts = () => {
   const {
@@ -19,6 +20,7 @@ export const ListProducts = () => {
     myProducts,
     getAllProducts,
   } = useProduct();
+  const { getUserData } = useUser();
 
   const path = usePathname();
 
@@ -26,6 +28,7 @@ export const ListProducts = () => {
     const token = Cookies.get("user.token");
     if (token) {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
+      (async () => await getUserData(token))();
       (async () => await getAllProducts())();
     }
   }, []);
