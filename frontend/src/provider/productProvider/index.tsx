@@ -37,7 +37,7 @@ export const ProductProvider = ({
   );
   const [searchProduct, setSearchProduct] = useState("");
   const { getUserById, user } = useUser();
-  const myProducts = products?.filter((product) => product.userId === user?.id);
+  const [myProducts, setMyProducts] = useState<TReturnProduct[]>([]);
 
   const router = useRouter();
 
@@ -47,6 +47,11 @@ export const ProductProvider = ({
       .get("products")
       .then((res) => {
         setProducts(res.data);
+        setMyProducts(
+          res.data.filter(
+            (product: TReturnProduct) => product.userId === user?.id
+          )
+        );
       })
       .catch((err) => {
         if (err instanceof AxiosError) {

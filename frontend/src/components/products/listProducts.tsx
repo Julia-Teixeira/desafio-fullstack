@@ -5,9 +5,10 @@ import { CardProduct } from "./cardProduct";
 import { usePathname } from "next/navigation";
 import { MdSearchOff } from "react-icons/md";
 import Search from "../search";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Loading from "@/app/products/loading";
-import { useUser } from "@/provider/userProvider";
+import Cookies from "js-cookie";
+import { api } from "@/service/api";
 
 export const ListProducts = () => {
   const {
@@ -16,13 +17,22 @@ export const ListProducts = () => {
     setSearchProduct,
     setFilteredProducts,
     myProducts,
+    getAllProducts,
   } = useProduct();
 
   const path = usePathname();
 
+  useEffect(() => {
+    const token = Cookies.get("user.token");
+    if (token) {
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
+      (async () => await getAllProducts())();
+    }
+  }, []);
+
   return (
     <div>
-      <div className="my-4 flex justify-between">
+      <div className="my-4 flex flex-col md:flex-row md:justify-between gap-4">
         {path == "/products/myProducts" ? (
           <h1 className="text-3xl font-bold">Meus Produtos</h1>
         ) : (
@@ -36,28 +46,26 @@ export const ListProducts = () => {
             setSearchProduct("");
             setFilteredProducts([]);
           }}
-          className="cursor-pointer flex items-center gap-2"
+          className="cursor-pointer hover:text-purple-700 hover:underline hover:underline-offset-4 my-4 flex gap-2 items-center"
         >
           Limpar pesquisa <MdSearchOff />
         </span>
       )}
-      <Suspense fallback={<Loading />}>
-        <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mt-4">
+      <ul className="w-full flex flex-wrap gap-4 mt-4">
+        <Suspense fallback={<Loading />}>
           {filteredProducts.length > 0
             ? filteredProducts.map((product) => (
                 <CardProduct product={product} key={product.id} />
               ))
             : path == "/products/myProducts"
-            ? myProducts &&
-              myProducts.map((product) => (
+            ? myProducts.map((product) => (
                 <CardProduct product={product} key={product.id} />
               ))
-            : products &&
-              products.map((product) => (
+            : products?.map((product) => (
                 <CardProduct product={product} key={product.id} />
               ))}
-        </ul>
-      </Suspense>
+        </Suspense>
+      </ul>
     </div>
   );
 };

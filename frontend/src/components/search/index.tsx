@@ -15,7 +15,7 @@ const Search = () => {
   };
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex gap-2 items-center bg-white rounded-md px-1">
       <input
         onChange={(e) => setSearchProduct(e.target.value)}
         value={searchProduct}

@@ -14,8 +14,8 @@ const Error = ({
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
+    <div className="text-center">
+      <h2 className="text-red-500 font-semibold">Something went wrong!</h2>
       <button onClick={() => reset()}>Try again</button>
     </div>
   );

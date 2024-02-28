@@ -9,7 +9,7 @@ const Header = () => {
   const { logOut } = useUser();
 
   return (
-    <div className="flex max-w-[1200px] flex-col items-center m-auto">
+    <div className="px-4 md:px-24 xl:px-0 flex max-w-[1200px] flex-col items-center mx-auto">
       <header className="w-full flex justify-between my-6 flex-wrap text-purple-100">
         <Link href="/products" className="pointer">
           MobleMinds

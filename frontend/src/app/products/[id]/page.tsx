@@ -69,7 +69,7 @@ const ProductPage = () => {
                         width={250}
                         height={300}
                         alt={product.name}
-                        className="w-[250px] h-[300px]"
+                        className="w-[250px] h-[300px] bg-white rounded"
                       />
                       <span className="text-sm">
                         Cor: <span className="capitalize">{item.color}</span>
